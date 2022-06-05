@@ -1,5 +1,9 @@
 import type { AppProps } from 'next/app';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import Layout from '../components/Layout';
+config.autoAddCss = false;
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
@@ -20,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
 const theme = {
   colors: {
     primary: '#f73f01',
+    secondary: '#777'
   },
 }
 
@@ -28,7 +33,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </>
   )
