@@ -1,19 +1,18 @@
-import { NextPage } from "next";
 import Image from "next/image";
 import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faInstagram, faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 import { Container } from "../styles/utils";
-import Logo from "./../assets/logo.png";
+import Logo from "../public/images/logo.png";
 
-const Footer: NextPage = () => {
+const Footer = () => {
   return (
     <StyledFooter>
       <FooterContainer>
-        <div>
+        <ImageContainer>
           <Image src={Logo} width={130} height={60} alt="logo"/>
-        </div>
+        </ImageContainer>
 
         <Contact>
           Imagine Shop - +55 (48) 3771 - 1703 3771 - 1823 - imagine@imagineschool.com.br - Rua Miguel Daux, 129 - Coqueiros - Florianópolis/SC
@@ -38,7 +37,6 @@ const Footer: NextPage = () => {
 }
 
 const StyledFooter = styled.footer`
-  width: 100vw;
   height: 12.5rem;
   background-color: #f4f4f4;
 `;
@@ -47,7 +45,11 @@ const FooterContainer = styled.div`
   ${Container};
   display: grid;
   grid-template-columns: 130px auto 130px;
-  padding: 2.5rem;
+  height: 12.5rem;
+`;
+
+const ImageContainer = styled.div`
+  padding-top: 2.5rem;
 `;
 
 const Contact = styled.p`
@@ -55,7 +57,7 @@ const Contact = styled.p`
   color: ${({theme}) => theme.colors.secondary};
   margin: 0;
   text-align: center;
-  margin-top: 8.125rem;
+  margin-top: 11.125rem;
 `;
 
 const SocialNetworksList = styled.ul`
@@ -64,6 +66,7 @@ const SocialNetworksList = styled.ul`
   margin: 0;
   display: flex;
   gap: 1.5rem;
+  padding-top: 2.5rem;
 `;
 
 const SocialNetworkIcon = styled(FontAwesomeIcon)`

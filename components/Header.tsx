@@ -3,11 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 
-import Logo from "../assets/logo.png";
-import ShoppingCartLogo from '../assets/carrinho.png';
+import Logo from "../public/images/logo.png";
+import ShoppingCartLogo from '../public/images/carrinho.png';
 import { Container } from "../styles/utils";
 
-const Header: NextPage = () => {
+const Header = () => {
   return (
     <StyledHeader>
       <Navbar>
@@ -37,7 +37,6 @@ const Header: NextPage = () => {
 }
 
 const StyledHeader = styled.header`
-  width: 100vw;
   margin: 1.87rem 0 3.125rem 0;
 `;
 
