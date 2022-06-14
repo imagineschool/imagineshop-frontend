@@ -4,6 +4,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    domains: ['imagineschool.herokuapp.com']
+  }
 }
 
 module.exports = nextConfig
