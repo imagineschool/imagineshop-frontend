@@ -28,7 +28,7 @@ const Products = ({ products }: ProductsProps) => {
       <ProductList>
         {products && products.map((product) => (
           <ProductItem key={product._id}>
-            <Link href='/'>
+            <Link href={`/products/${product._id}`}>
               <a>
                 <Image src={product.image} width={230} height={230} alt='Product image'/>
 
