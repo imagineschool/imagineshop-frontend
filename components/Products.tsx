@@ -3,18 +3,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { Container } from "../styles/utils";
+import { IProduct } from "../types";
 
-interface Product {
-  _id: string;
-  name: string;
-  image: string;
-  price: number;
-  formattedPrice: string;
-  splitPrice: string;
-}
 
 interface ProductsProps {
-  products: Product[];
+  products: IProduct[];
 }
 
 const Products = ({ products }: ProductsProps) => {
