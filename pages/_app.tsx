@@ -2,7 +2,9 @@ import type { AppProps } from 'next/app';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+
 import Layout from '../components/Layout';
+import ShoppingCartProvider from '../contexts/ShoppingCartContext';
 config.autoAddCss = false;
 
 const GlobalStyle = createGlobalStyle`
@@ -33,9 +35,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <ShoppingCartProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ShoppingCartProvider>
       </ThemeProvider>
     </>
   )

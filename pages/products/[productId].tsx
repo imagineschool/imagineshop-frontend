@@ -1,32 +1,23 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import styled from 'styled-components';
+import { useContext } from 'react';
 
 import Banner from '../../components/Banner';
 import { Container } from '../../styles/utils';
 import BannerImage from '../../public/images/banner2.png';
-
-interface Product {
-  _id: string;
-  name: string;
-  image: string;
-  price: number;
-  formattedPrice: string;
-  splitPrice: string;
-  fileName: string;
-  description: string;
-  summary: string;
-}
+import { IProduct } from '../../types';
+import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
 interface ProductsProps {
-  product: Product;
+  product: IProduct;
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const productId = ctx.params?.productId;
   const api = 'https://imagineschool.herokuapp.com';
   const result = await fetch(`${api}/products/${productId}`);
-  const product: Product = await result.json();
+  const product: IProduct = await result.json();
   product.image = `${api}/uploads/${product.fileName}`;
   product.formattedPrice = (new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'})).format(product.price);
   product.splitPrice = (new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'})).format(product.price/10);
@@ -38,6 +29,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 }
 
 const ProductId: NextPage<ProductsProps> = ({ product }) => {
+
+  const { addProduct } = useContext(ShoppingCartContext);
+
+  const addProductInShoppingCart = (product: IProduct) => {
+    addProduct(product);
+  }
+
   return (
     <ProductContainer>
       <Banner image={BannerImage} width={1140} heigth={145} />
@@ -59,7 +57,7 @@ const ProductId: NextPage<ProductsProps> = ({ product }) => {
            10x de {product.splitPrice} sem juros
           </ProductSplitPrice>
 
-          <Button>
+          <Button onClick={() => addProductInShoppingCart(product)}>
             Adicionar ao carrinho
           </Button>
 
