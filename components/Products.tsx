@@ -11,7 +11,6 @@ interface ProductsProps {
 }
 
 const Products = ({ products }: ProductsProps) => {
-  console.log(products);
   return (
     <ProductContainer>
       <Title>

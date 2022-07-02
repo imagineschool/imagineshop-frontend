@@ -2,6 +2,8 @@ import type { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { useContext } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Banner from '../../components/Banner';
 import { Container } from '../../styles/utils';
@@ -19,8 +21,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const result = await fetch(`${api}/products/${productId}`);
   const product: IProduct = await result.json();
   product.image = `${api}/uploads/${product.fileName}`;
-  product.formattedPrice = (new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'})).format(product.price);
-  product.splitPrice = (new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'})).format(product.price/10);
+  product.formattedPrice = (new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })).format(product.price);
+  product.splitPrice = (new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })).format(product.price / 10);
   return {
     props: {
       product
@@ -33,48 +35,55 @@ const ProductId: NextPage<ProductsProps> = ({ product }) => {
   const { addProduct } = useContext(ShoppingCartContext);
 
   const addProductInShoppingCart = (product: IProduct) => {
+    toast.success("Produto adicionado no carrinho", {
+      position: "bottom-right",
+      autoClose: 3000,
+    });
     addProduct(product);
   }
 
   return (
-    <ProductContainer>
-      <Banner image={BannerImage} width={1140} heigth={145} />
-      <ProductDetail>
-        <ImageContainer>
-          <Image src={product.image} width={200} height={200} />
-        </ImageContainer>
+    <>
+      <ProductContainer>
+        <Banner image={BannerImage} width={1140} heigth={145} />
+        <ProductDetail>
+          <ImageContainer>
+            <Image src={product.image} width={200} height={200} />
+          </ImageContainer>
 
-        <div>
-          <ProductName>
-            {product.name}
-          </ProductName>
+          <div>
+            <ProductName>
+              {product.name}
+            </ProductName>
 
-          <ProductPrice>
-            {product.formattedPrice}
-          </ProductPrice>
+            <ProductPrice>
+              {product.formattedPrice}
+            </ProductPrice>
 
-          <ProductSplitPrice>
-           10x de {product.splitPrice} sem juros
-          </ProductSplitPrice>
+            <ProductSplitPrice>
+              10x de {product.splitPrice} sem juros
+            </ProductSplitPrice>
 
-          <Button onClick={() => addProductInShoppingCart(product)}>
-            Adicionar ao carrinho
-          </Button>
+            <Button onClick={() => addProductInShoppingCart(product)}>
+              Adicionar ao carrinho
+            </Button>
 
-          <ProductDescription>
-            {product.description}
-          </ProductDescription>
-        </div>
-      </ProductDetail>
-      
-     <SummaryTitle>
-        <span>Inf</span>ormações do produto
-     </SummaryTitle>
+            <ProductDescription>
+              {product.description}
+            </ProductDescription>
+          </div>
+        </ProductDetail>
 
-     <Summary>
-        {product.summary}
-     </Summary>
-    </ProductContainer>
+        <SummaryTitle>
+          <span>Inf</span>ormações do produto
+        </SummaryTitle>
+
+        <Summary>
+          {product.summary}
+        </Summary>
+      </ProductContainer>
+      <ToastContainer />
+    </>
   )
 }
 
